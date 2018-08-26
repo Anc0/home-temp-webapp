@@ -2,7 +2,7 @@
   <div class="component">
     <h1>TOPICS</h1>
     <div v-for="topic in topics">
-      <topic :topic_id="topic"></topic>
+      <topic :topicId="topic"></topic>
     </div>
   </div>
 </template>

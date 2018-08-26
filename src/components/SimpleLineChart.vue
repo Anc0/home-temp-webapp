@@ -5,24 +5,48 @@
     extends: Line,
 
     props: {
-      chartdata: {
-        type: Array,
+      topicId: {
+        type: Number,
         required: true
       }
     },
 
+    methods: {
+      getData: function () {
+        var uri = 'http://192.168.1.14:8000/api/topic/' + this.topicId + '/records/';
+        var times = [];
+        var values = [];
+
+        this.axios.get(uri).then((response) => {
+          response.data.forEach(function (data) {
+
+            console.log(this.$moment(data.fields.created).format());
+
+            times.push(data.fields.created);
+            values.push(data.fields.value);
+          });
+
+          this.renderChart({
+            labels: times,
+            datasets: [
+              {
+                backgroundColor: '#f87979',
+                data: values
+              }
+            ]
+          },
+          {
+            legend: {
+              display: false
+            }
+          })
+        });
+      }
+    },
+
     mounted() {
-    console.log(this.chartdata);
-    this.renderChart({
-      labels: [1],
-      datasets: [
-        {
-          backgroundColor: '#f87979',
-          data: [2]
-        }
-      ]
-    })
-  }
+      this.getData.call();
+    }
 
   }
 </script>
