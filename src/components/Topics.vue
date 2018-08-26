@@ -11,6 +11,10 @@
   import Topic from '@/components/Topic';
 
   export default {
+    components: {
+      topic: Topic
+    },
+
     data() {
       return {
         topics: []
@@ -21,15 +25,10 @@
       this.getTopics();
     },
 
-    components: {
-      topic: Topic
-    },
-
     methods: {
       getTopics() {
         var uri = 'http://192.168.1.14:8000/api/topics/';
         var topics = [];
-
         // Get all topics
         this.axios.get(uri).then((response) => {
           response.data.forEach(function (data) {
@@ -44,4 +43,5 @@
 </script>
 
 <style>
+
 </style>

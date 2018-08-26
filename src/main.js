@@ -5,15 +5,14 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import VueChartkick from 'vue-chartkick'
-import Chart from 'chart.js'
+import VueCharts from 'vue-chartjs'
 
 Vue.use(VueAxios, axios);
-Vue.use(VueChartkick, {adapter: Chart});
+Vue.use(VueCharts);
+
 
 Vue.config.productionTip = false;
 
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
