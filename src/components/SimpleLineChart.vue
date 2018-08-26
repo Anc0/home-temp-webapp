@@ -13,39 +13,68 @@
 
     methods: {
       getData: function () {
-        var uri = 'http://192.168.1.14:8000/api/topic/' + this.topicId + '/records/';
+        var uri = 'http://192.168.1.14:8000/api/topic/' + this.topicId + '/records/' + (7 * 24 * 3600) + '/';
         var times = [];
         var values = [];
 
+
         this.axios.get(uri).then((response) => {
           response.data.forEach(function (data) {
-
-            console.log(this.$moment(data.fields.created).format());
-
             times.push(data.fields.created);
             values.push(data.fields.value);
-          });
+          }.bind(this));
+
+          console.log(values);
+          console.log(Math.min.apply(null, values));
 
           this.renderChart({
-            labels: times,
-            datasets: [
-              {
-                backgroundColor: '#f87979',
-                data: values
+              labels: times,
+              datasets: [
+                {
+                  borderColor: '#f87979',
+                  data: values,
+                  lineTension: 0.5,
+                  fill: false,
+                  cubicInterpolationMode: 'monotone'
+                }
+              ]
+            },
+            {
+              legend: {
+                display: false
+              },
+              scales: {
+                xAxes: [{
+                  display: false
+                }],
+                yAxes: [{
+                  display: true,
+                  ticks: {
+                    suggestedMin: Math.min.apply(null, values) - 0.1,
+                    suggestedMax: Math.max.apply(null, values) + 0.1
+                  }
+                }]
+              },
+              elements: {
+                point: {
+                  radius: 0
+                }
+              },
+              layout: {
+                padding: {
+                  left: 10,
+                  right: 10,
+                  top: 10,
+                  bottom: 10
+                }
               }
-            ]
-          },
-          {
-            legend: {
-              display: false
-            }
-          })
-        });
+            })
+        })
       }
     },
 
     mounted() {
-      this.getData.call();
+      this.getData();
     }
 
   }
