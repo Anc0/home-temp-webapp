@@ -13,7 +13,7 @@
 
     methods: {
       getData: function () {
-        var uri = 'http://192.168.1.14:8000/api/topic/' + this.topicId + '/records/' + (7 * 24 * 3600) + '/';
+        var uri = 'http://192.168.1.14:8000/api/topic/' + this.topicId + '/records/' + (24 * 3600) + '/';
         var times = [];
         var values = [];
 
@@ -24,16 +24,12 @@
             values.push(data.fields.value);
           }.bind(this));
 
-          console.log(values);
-          console.log(Math.min.apply(null, values));
-
           this.renderChart({
               labels: times,
               datasets: [
                 {
                   borderColor: '#f87979',
                   data: values,
-                  lineTension: 0.5,
                   fill: false,
                   cubicInterpolationMode: 'monotone'
                 }

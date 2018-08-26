@@ -26,6 +26,5 @@ export default {
   display: inline-block;
   max-width: 1100px;
   width: 100%;
-  border: solid 1px black;
 }
 </style>
