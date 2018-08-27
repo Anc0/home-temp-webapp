@@ -27,7 +27,7 @@
 
     methods: {
       getTopics() {
-        var uri = 'http://localhost:8000/api/topics/';
+        var uri = process.env.API_URL + 'topics/';
         var topics = [];
         // Get all topics
         this.axios.get(uri).then((response) => {

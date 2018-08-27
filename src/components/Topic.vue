@@ -69,14 +69,14 @@
 
     methods: {
       getTopic() {
-        var uri = 'http://localhost:8000/api/topic/' + this.topicId + '/';
+        var uri = process.env.API_URL + 'topic/' + this.topicId + '/';
         this.axios.get(uri).then((response) => {
           this.topic = response.data[0].fields;
         });
       },
 
       getRecords(offset) {
-        var uri = 'http://localhost:8000/api/topic/' + this.topicId + '/records/' + (offset * 3600) + '/';
+        var uri = process.env.API_URL + 'topic/' + this.topicId + '/records/' + (offset * 3600) + '/';
         var values = [];
 
         this.axios.get(uri).then((response) => {

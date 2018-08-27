@@ -13,7 +13,7 @@
 
     methods: {
       getData: function () {
-        var uri = 'http://localhost:8000/api/topic/' + this.topicId + '/records/' + (24 * 3600) + '/';
+        var uri = process.env.API_URL + 'topic/' + this.topicId + '/records/' + (24 * 3600) + '/';
         var times = [];
         var values = [];
 
