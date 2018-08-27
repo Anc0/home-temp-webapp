@@ -27,7 +27,7 @@
 
     methods: {
       getTopics() {
-        var uri = 'http://192.168.1.14:8000/api/topics/';
+        var uri = 'http://localhost:8000/api/topics/';
         var topics = [];
         // Get all topics
         this.axios.get(uri).then((response) => {

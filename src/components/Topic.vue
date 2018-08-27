@@ -9,10 +9,24 @@
         </div>
         <div class="row">
           <div class="col-3">
-        <span>
-          Max temperature: {{maxTemp}}<br>
-          Daily average: {{avgTemp}}<br>
-        </span>
+            <div class="row">
+              <div class="col">
+                <h4>Current temperature</h4>
+                <span>{{currTemp}}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h4>Max temperature</h4>
+                <span>{{maxTemp}}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h4>Daily average</h4>
+                <span>{{maxTemp}}</span>
+              </div>
+            </div>
           </div>
           <div class="col-9">
             <simple-line-chart :topicId="topicId" :height="200"></simple-line-chart>
@@ -35,6 +49,7 @@
     data() {
       return {
         topic: {},
+        currTemp: 0,
         maxTemp: 0,
         avgTemp: 0
       }
@@ -42,6 +57,7 @@
 
     created: function () {
       this.getTopic();
+      this.getRecords(24);
     },
 
     props: {
@@ -53,21 +69,27 @@
 
     methods: {
       getTopic() {
-        var uri = 'http://192.168.1.14:8000/api/topic/' + this.topicId + '/';
+        var uri = 'http://localhost:8000/api/topic/' + this.topicId + '/';
         this.axios.get(uri).then((response) => {
           this.topic = response.data[0].fields;
         });
       },
 
-      getRecords() {
-        var uri = 'http://192.168.1.14:8000/api/topic/' + this.topicId + '/records/' + (24 * 3600) + '/';
+      getRecords(offset) {
+        var uri = 'http://localhost:8000/api/topic/' + this.topicId + '/records/' + (offset * 3600) + '/';
         var values = [];
 
         this.axios.get(uri).then((response) => {
+          var maxTime = this.$moment(response.data[0].fields.created);
+
           response.data.forEach(function (data) {
             values.push(data.fields.value);
-          });
-          this.maxTemp = Math.max.apply(null, values);
+            if(this.$moment(data.fields.created) > maxTime) {
+              this.currTemp = data.fields.value;
+            }
+          }.bind(this));
+
+          this.maxTemp = Math.round(Math.max.apply(null, values) * 100)/100;
 
           var sum = 0;
           var len = 0;
@@ -75,7 +97,8 @@
             sum += data;
             len += 1;
           });
-          this.avgTemp = sum / len;
+          this.avgTemp = Math.round((sum / len) * 100) / 100;
+
         });
       }
     }
@@ -95,6 +118,7 @@
     padding-bottom: 30px;
     background: $mist;
     border-radius: 10px;
+    margin-bottom: 30px;
   }
 
 </style>

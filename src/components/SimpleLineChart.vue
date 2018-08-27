@@ -13,14 +13,14 @@
 
     methods: {
       getData: function () {
-        var uri = 'http://192.168.1.14:8000/api/topic/' + this.topicId + '/records/' + (24 * 3600) + '/';
+        var uri = 'http://localhost:8000/api/topic/' + this.topicId + '/records/' + (24 * 3600) + '/';
         var times = [];
         var values = [];
 
 
         this.axios.get(uri).then((response) => {
           response.data.forEach(function (data) {
-            times.push(data.fields.created);
+            times.push(this.$moment(data.fields.created).format('YYYY MM DD HH:mm'));
             values.push(data.fields.value);
           }.bind(this));
 
@@ -28,7 +28,7 @@
               labels: times,
               datasets: [
                 {
-                  borderColor: '#f87979',
+                  borderColor: '#763626',
                   data: values,
                   fill: false,
                   cubicInterpolationMode: 'monotone'
@@ -41,13 +41,16 @@
               },
               scales: {
                 xAxes: [{
-                  display: false
+                  display: true
                 }],
                 yAxes: [{
                   display: true,
                   ticks: {
                     suggestedMin: Math.min.apply(null, values) - 0.1,
                     suggestedMax: Math.max.apply(null, values) + 0.1
+                  },
+                  gridlines: {
+                    color: "rgba(0, 0, 0, 0)"
                   }
                 }]
               },
