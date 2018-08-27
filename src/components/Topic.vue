@@ -4,29 +4,63 @@
       <div class="col">
         <div class="row">
           <h2 class="topic-title">
-            {{topic.name}}
+            {{topic.short_name}}
           </h2>
         </div>
         <div class="row">
           <div class="col-3">
-            <div class="row">
-              <div class="col">
-                <h4>Current temperature</h4>
-                <span>{{currTemp}}</span>
+
+            <div class="stat-container">
+              <div class="row">
+                <div class="col">
+                    <span>
+                      Current
+                    </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                <span>
+                  {{currTemp}}
+                </span>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col">
-                <h4>Max temperature</h4>
-                <span>{{maxTemp}}</span>
+
+            <div class="stat-container">
+              <div class="row">
+                <div class="col">
+                    <span>
+                      Maximum
+                    </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                <span>
+                  {{maxTemp}}
+                </span>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col">
-                <h4>Daily average</h4>
-                <span>{{maxTemp}}</span>
+
+            <div class="stat-container">
+              <div class="row">
+                <div class="col">
+                    <span>
+                      Average
+                    </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                <span>
+                  {{avgTemp}}
+                </span>
+                </div>
               </div>
             </div>
+
           </div>
           <div class="col-9">
             <simple-line-chart :topicId="topicId" :height="200"></simple-line-chart>
@@ -84,16 +118,16 @@
 
           response.data.forEach(function (data) {
             values.push(data.fields.value);
-            if(this.$moment(data.fields.created) > maxTime) {
+            if (this.$moment(data.fields.created) > maxTime) {
               this.currTemp = data.fields.value;
             }
           }.bind(this));
 
-          this.maxTemp = Math.round(Math.max.apply(null, values) * 100)/100;
+          this.maxTemp = Math.round(Math.max.apply(null, values) * 100) / 100;
 
           var sum = 0;
           var len = 0;
-          values.forEach(function(data) {
+          values.forEach(function (data) {
             sum += data;
             len += 1;
           });
@@ -107,6 +141,9 @@
 
 <style lang="scss">
   $mist: #90afc5;
+  $stone: #336b87;
+  $shadow: #2a3132;
+  $autumn: #763626;
 
   .topic-title {
     text-align: center;
@@ -119,6 +156,20 @@
     background: $mist;
     border-radius: 10px;
     margin-bottom: 30px;
+  }
+
+  .stat-container {
+    background: $stone;
+    border-radius: 10px;
+    color: white;
+    font-size: 32px;
+    width: 80%;
+    text-align: center;
+    margin: 20px 40px 0 40px;
+  }
+
+  .stat-row {
+    display: inline-block;
   }
 
 </style>
