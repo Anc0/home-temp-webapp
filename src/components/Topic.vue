@@ -63,7 +63,7 @@
 
           </div>
           <div class="col-9">
-            <simple-line-chart :topicId="topicId" :height="200"></simple-line-chart>
+            <simple-line-chart :topicId="topicId" :offset="offset" :height="200"></simple-line-chart>
           </div>
         </div>
       </div>
@@ -85,17 +85,21 @@
         topic: {},
         currTemp: 0,
         maxTemp: 0,
-        avgTemp: 0
+        avgTemp: 0,
       }
     },
 
     created: function () {
       this.getTopic();
-      this.getRecords(24);
+      this.getRecords();
     },
 
     props: {
       topicId: {
+        type: Number,
+        required: true
+      },
+      offset: {
         type: Number,
         required: true
       }
@@ -109,15 +113,11 @@
         });
       },
 
-      getRecords(offset) {
-        var uri = process.env.API_URL + 'topic/' + this.topicId + '/records/' + (offset * 3600) + '/';
+      getRecords() {
+        var uri = process.env.API_URL + 'topic/' + this.topicId + '/records/' + this.offset + '/';
         var values = [];
 
         this.axios.get(uri).then((response) => {
-
-          console.log(response);
-
-
           var maxTime = this.$moment(response.data[0].created);
 
           response.data.forEach(function (data) {

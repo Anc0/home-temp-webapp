@@ -8,19 +8,24 @@
       topicId: {
         type: Number,
         required: true
+      },
+      offset: {
+        type: Number,
+        requierd: true
       }
     },
 
     methods: {
       getData: function () {
-        var uri = process.env.API_URL + 'topic/' + this.topicId + '/records/' + (24 * 3600) + '/';
+        var uri = process.env.API_URL + 'topic/' + this.topicId + '/records/' + this.offset + '/';
         var times = [];
         var values = [];
+        var tempData = [];
 
         this.axios.get(uri).then((response) => {
           response.data.forEach(function (data) {
             times.push(this.$moment(data.created).format('YYYY MM DD HH:mm'));
-            values.push(data.value);
+            values.push(Math.round(data.value * 100)/100);
           }.bind(this));
 
           this.renderChart({
@@ -40,7 +45,8 @@
               },
               scales: {
                 xAxes: [{
-                  display: true
+                  display: true,
+                  maxTicksLimit: 4
                 }],
                 yAxes: [{
                   display: true,
@@ -65,6 +71,9 @@
                   top: 10,
                   bottom: 10
                 }
+              },
+              tooltips: {
+                intersect: false
               }
             })
         })

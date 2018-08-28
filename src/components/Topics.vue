@@ -2,7 +2,21 @@
   <div class="component">
     <h1>TOPICS</h1>
     <div v-for="topic in topics">
-      <topic :topicId="topic"></topic>
+      <topic :topicId="topic" :offset="offset"></topic>
+    </div>
+    <div class="row">
+      <div class="col">
+        <span>Set number of days:</span>
+        <select v-on:change="changeDays">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+        </select>
+      </div>
     </div>
   </div>
 </template>
@@ -17,7 +31,8 @@
 
     data() {
       return {
-        topics: []
+        topics: [],
+        offset: 3600 * 24
       }
     },
 
@@ -37,6 +52,12 @@
           this.topics = topics;
         });
       },
+
+      changeDays(e) {
+        this.offset = e.target.value * 3600 * 24;
+        console.log("Updating.");
+        this.$forceUpdate();
+      }
     }
   }
 </script>
