@@ -17,11 +17,10 @@
         var times = [];
         var values = [];
 
-
         this.axios.get(uri).then((response) => {
           response.data.forEach(function (data) {
-            times.push(this.$moment(data.fields.created).format('YYYY MM DD HH:mm'));
-            values.push(data.fields.value);
+            times.push(this.$moment(data.created).format('YYYY MM DD HH:mm'));
+            values.push(data.value);
           }.bind(this));
 
           this.renderChart({

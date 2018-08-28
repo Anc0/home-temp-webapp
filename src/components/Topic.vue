@@ -114,14 +114,19 @@
         var values = [];
 
         this.axios.get(uri).then((response) => {
-          var maxTime = this.$moment(response.data[0].fields.created);
+
+          console.log(response);
+
+
+          var maxTime = this.$moment(response.data[0].created);
 
           response.data.forEach(function (data) {
-            values.push(data.fields.value);
-            if (this.$moment(data.fields.created) > maxTime) {
-              this.currTemp = data.fields.value;
+            values.push(data.value);
+            if (this.$moment(data.created) > maxTime) {
+              this.currTemp = data.value;
             }
           }.bind(this));
+          this.currTemp = Math.round(this.currTemp * 100) / 100;
 
           this.maxTemp = Math.round(Math.max.apply(null, values) * 100) / 100;
 
