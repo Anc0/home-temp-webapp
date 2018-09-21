@@ -4,7 +4,7 @@
       <div class="col">
         <div class="row">
           <h2 class="topic-title">
-            {{topic.short_name}}
+            <a href="/topic">{{topic.short_name}}</a>
           </h2>
         </div>
         <div class="row">
@@ -175,6 +175,15 @@
 
   .stat-row {
     display: inline-block;
+  }
+
+  a {
+    color: black;
+    
+    &:hover {
+      color: $autumn;
+      text-decoration: none;
+    }
   }
 
 </style>

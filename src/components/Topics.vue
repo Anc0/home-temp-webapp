@@ -19,6 +19,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -55,7 +56,6 @@
 
       changeDays(e) {
         this.offset = e.target.value * 3600 * 24;
-        console.log("Updating.");
         this.$forceUpdate();
       }
     }

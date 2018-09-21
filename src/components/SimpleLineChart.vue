@@ -20,7 +20,6 @@
         var uri = process.env.API_URL + 'topic/' + this.topicId + '/records/' + this.offset + '/';
         var times = [];
         var values = [];
-        var tempData = [];
 
         this.axios.get(uri).then((response) => {
           response.data.forEach(function (data) {
@@ -46,13 +45,19 @@
               scales: {
                 xAxes: [{
                   display: true,
-                  maxTicksLimit: 4
+                  ticks: {
+                    autoskip: true,
+                    maxTicksLimit: 8
+                  }
                 }],
                 yAxes: [{
                   display: true,
                   ticks: {
                     suggestedMin: Math.min.apply(null, values) - 0.1,
-                    suggestedMax: Math.max.apply(null, values) + 0.1
+                    suggestedMax: Math.max.apply(null, values) + 0.1,
+                    callback: function(value) {
+                      return value + '°C';
+                    }
                   },
                   gridlines: {
                     color: "rgba(0, 0, 0, 0)"
@@ -82,6 +87,12 @@
 
     mounted() {
       this.getData();
+    },
+
+    watch: {
+      offset: function(newVal, oldVal) {
+        this.getData();
+      }
     }
 
   }
