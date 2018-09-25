@@ -8,7 +8,7 @@
           </h2>
         </div>
         <div class="row">
-          <div class="col-3">
+          <div class="col-3 d-none d-xl-block">
 
             <div class="stat-container">
               <div class="row">
@@ -62,8 +62,68 @@
             </div>
 
           </div>
-          <div class="col-9">
+          <div class="col-9 d-none d-xl-block">
             <simple-line-chart :topicId="topicId" :offset="offset" :height="200"></simple-line-chart>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col d-xl-none">
+            <simple-line-chart :topicId="topicId" :offset="offset" :height="200"></simple-line-chart>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col d-xl-none">
+                        <div class="stat-container">
+              <div class="row">
+                <div class="col">
+                    <span>
+                      Current
+                    </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                <span>
+                  {{currTemp}}
+                </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-container">
+              <div class="row">
+                <div class="col">
+                    <span>
+                      Maximum
+                    </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                <span>
+                  {{maxTemp}}
+                </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-container">
+              <div class="row">
+                <div class="col">
+                    <span>
+                      Average
+                    </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                <span>
+                  {{avgTemp}}
+                </span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
