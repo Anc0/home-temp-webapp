@@ -15,6 +15,8 @@
           <option value="5">5</option>
           <option value="6">6</option>
           <option value="7">7</option>
+          <option value="14">14</option>
+          <option value="28">28</option>
         </select>
       </div>
     </div>
@@ -33,7 +35,7 @@
     data() {
       return {
         topics: [],
-        offset: 3600 * 24
+        offset: 1
       }
     },
 
@@ -55,7 +57,7 @@
       },
 
       changeDays(e) {
-        this.offset = e.target.value * 3600 * 24;
+        this.offset = e.target.value;
         this.$forceUpdate();
       }
     }
